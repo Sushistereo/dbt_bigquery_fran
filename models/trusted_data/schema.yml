@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: customers
+    config:
+      schema: trusted_data_flachavanne2
+    columns:
+      - name: customer_id
+        description: Id del customer
+        tests:
+          - not_null
+      - name: customer_unique_id
+        description: Id unico del customer
+        tests:
+          - not_null
+      - name: customer_zip_code_prefix
+        description: ZIP Code del customer
+      - name: customer_city
+        description: Descripcion de la city del customer i.e (ACU, ICO, IPE)
+      - name: customer_state
+        description: Estado del customer i.e (RN, CE, RS)
+
+  

@@ -6,5 +6,5 @@ SELECT
   , CUSTOMER_ZIP_CODE_PREFIX
   , UPPER(TRIM(CUSTOMER_CITY)) as CUSTOMER_CITY
   , UPPER(TRIM(CUSTOMER_STATE)) AS CUSTOMER_STATE
-FROM {{ source('fran_ecommerce_ecommerce_prd', 'customers') }}
+FROM {{ source('flachavanne_ecommerce_raw2', 'customers') }}
 WHERE CUSTOMER_UNIQUE_ID IS NOT NULL

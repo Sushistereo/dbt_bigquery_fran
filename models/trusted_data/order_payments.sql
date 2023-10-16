@@ -2,10 +2,9 @@
 
 SELECT
     ORDER_ID,
-    ORDER_ITEM_ID,
-    PRODUCT_ID,
-    SELLER_ID,
-    SHIPPING_LIMIT_DATE,
-    PRICE,
-    FREIGHT_VALUE
-FROM {{ source('flachavanne_ecommerce_raw2', 'order_items') }}
+    PAYMENT_SEQUENTIAL,
+    PAYMENT_TYPE,
+    PAYMENT_INSTALLMENTS,
+    COALESCE(PAYMENT_VALUE, 0) as PAYMENT_VALUE,
+FROM {{ source('flachavanne_ecommerce_raw2', 'order_payments') }}
+where ORDER_ID is not null

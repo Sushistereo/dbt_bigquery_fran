@@ -10,4 +10,4 @@ SELECT
     REVIEW_ANSWER_TIMESTAMP
     
 FROM {{ source('flachavanne_ecommerce_raw2', 'order_reviews') }}
-where ORDER_ID is not null and REVIEW_ID is not null
+where ORDER_ID is not null and REVIEW_ID is not null and REVIEW_SCORE is not null

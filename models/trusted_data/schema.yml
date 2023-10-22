@@ -107,6 +107,46 @@ models:
           - not_null
       - name: PRODUCT_CATEGORY_NAME_ENGLISH
         description: nombre en inglés de la categoría del producto
+  - name: order_payments
+    config:
+      schema: trusted_data_flachavanne2
+    columns:
+      - name: ORDER_ID
+        description: identificador de la orden
+        tests: 
+            - not_null
+      - name: PAYMENT_SEQUENTIAL
+        description: identifica cada método de pago usado en cada órden
+      - name: PAYMENT_TYPE
+        description: medio de pago utilizado
+      - name: PAYMENT_INSTALLMENTS
+        description: la cantidad de cuotas
+      - name: PAYMENT_VALUE
+        description: valor de cada forma de pago
+  - name: order_reviews
+    config:
+      schema: trusted_data_flachavanne2
+    columns:
+      - name: REVIEW_ID
+        description: identificador de la review
+        tests: 
+            - not_null
+      - name: ORDER_ID
+        description: identificador de la orden sobre la que se hace la review
+        tests:
+            - not_null
+      - name: REVIEW_SCORE
+        description: puntaje asignado
+        tests: 
+            - not_null
+      - name: REVIEW_COMMENT_TITLE
+        description: título del review
+      - name: REVIEW_COMMENT_MESSAGE
+        description: campo de téxto que contiene la review
+      - name: REVIEW_CREATION_DATE
+        description: momento de creación de la review
+      - name: REVIEW_ANSWER_TIMESTAMP
+        description: momento de respuesta a la review
   - name: orders
     config:
       schema: trusted_data_flachavanne2

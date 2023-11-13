@@ -1,0 +1,246 @@
+version: 2
+
+models:
+  - name: dim_time
+    description: Dimension de Tiempo
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: date
+        description: Fecha
+        tests:
+          - unique
+          - not_null
+      - name: month
+        description: Mes
+        tests:
+          - not_null
+      - name: quarter
+        description: Quatrimestre (Q)
+        tests:
+          - not_null
+      - name: year
+        description: Año
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: Dimension de clientes
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: customer_id
+        description: Id del customer
+        tests:
+          - not_null
+      - name: customer_unique_id
+        description: Id unico del customer
+        tests:
+          - not_null
+      - name: customer_zip_code_prefix
+        description: ZIP Code del customer
+      - name: GEOLOCATION_LAT
+        description: Latitud del zip
+        tests:
+          - not_null
+      - name: GEOLOCATION_LNG
+        description: Longitud del zip
+        tests:
+          - not_null
+      - name: GEOLOCATION_CITY
+        description: Ciudad del zip
+      - name: GEOLOCATION_STATE
+        description: Estado del zip
+
+  - name: dim_products
+    description: Dimension de clientes
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: PRODUCT_ID
+        description: identificador del producto
+        tests:
+          - not_null
+      - name: PRODUCT_CATEGORY_NAME
+        description: nombre de la categoria
+      - name: PRODUCT_NAME_LENGHT
+        description: caracteres del nombre del producto
+      - name: PRODUCT_DESCRIPTION_LENGHT
+        description: caracteres del nombre del producto
+      - name: PRODUCT_PHOTOS_QTY
+        description: Q de imagenes asociada al producto
+      - name: PRODUCT_WEIGHT_G
+        description: peso del producto en gramos
+      - name: PRODUCT_LENGTH_CM
+        description: largo del producto en centímetros
+      - name: PRODUCT_HEIGHT_CM
+        description: alto del producto en centímetros
+      - name: PRODUCT_WIDTH_CM
+        description: ancho del producto en centímetros
+      - name: PRODUCT_WIDTH_CM
+        description: ancho del producto en centímetros
+      - name: PRODUCT_CATEGORY_NAME_ENGLISH
+        description: Nombre de la categoría del producto en ingles
+
+  - name: dim_sellers
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: SELLER_ID
+        description: identificador del seller
+        tests:
+          - not_null
+      - name: SELLER_ZIP_CODE_PREFIX
+        description: zipcode del seller
+      - name: SELLER_CITY
+        description: ciudad del seller
+      - name: SELLER_STATE
+        description: estado del seller
+      - name: GEOLOCATION_ZIP_CODE_PREFIX
+        description: ZIP Code
+        tests:
+          - not_null
+      - name: GEOLOCATION_LAT
+        description: Latitud del zip
+        tests:
+          - not_null
+      - name: GEOLOCATION_LNG
+        description: Longitud del zip
+        tests:
+          - not_null
+      - name: GEOLOCATION_CITY
+        description: Ciudad del zip
+      - name: GEOLOCATION_STATE
+        description: Estado del zip
+
+  - name: fact_orders
+    description: Datamart de Ordenes - Delivery
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: ORDER_ID
+        description: identificador de la orden
+        tests:
+          - not_null
+      - name: CUSTOMER_ID
+        description: identificador del cliente
+      - name: ORDER_STATUS
+        description: estado de la orden
+      - name: ORDER_PURCHASE_TIMESTAMP
+        description: momento de compra (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_APPROVED_AT
+        description: momento de aprobación de la orden (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CARRIER_DATE
+        description: momento de entrega a flete (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CUSTOMER_DATE
+        description: momento de entrega a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ESTIMATED_DELIVERY_DATE
+        description: momento de entrega estimado a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ITEM_ID
+        description: identifica veces que aparece cada producto
+      - name: PRODUCT_ID
+        description: identificador del producto
+      - name: SELLER_ID
+        description: identificador del seller
+      - name: SHIPPING_LIMIT_DATE
+        description: fecha límite de envío
+      - name: PRICE
+        description: precio unitario de cada order_item
+      - name: FREIGHT_VALUE
+        description: costo del envío de cada order_item
+
+  - name: fact_payments
+    description: Datamart de pagos
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: ORDER_ID
+        description: identificador de la orden
+        tests:
+          - not_null
+      - name: PAYMENT_SEQUENTIAL
+        description: identifica cada método de pago usado en cada órden
+      - name: PAYMENT_TYPE
+        description: medio de pago utilizado
+      - name: PAYMENT_INSTALLMENTS
+        description: la cantidad de cuotas
+      - name: PAYMENT_VALUE
+        description: valor de cada forma de pago
+      - name: CUSTOMER_ID
+        description: id del cliente que hizo el pago
+      - name: ORDER_STATUS
+        description: estado de la orden
+      - name: ORDER_PURCHASE_TIMESTAMP
+        description: momento de compra (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_APPROVED_AT
+        description: momento de aprobación de la orden (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CARRIER_DATE
+        description: momento de entrega a flete (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CUSTOMER_DATE
+        description: momento de entrega a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ESTIMATED_DELIVERY_DATE
+        description: momento de entrega estimado a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ITEM_ID
+        description: identifica veces que aparece cada producto
+      - name: PRODUCT_ID
+        description: identificador del producto
+      - name: SELLER_ID
+        description: identificador del seller
+      - name: SHIPPING_LIMIT_DATE
+        description: fecha límite de envío
+      - name: PRICE
+        description: precio unitario de cada order_item
+      - name: FREIGHT_VALUE
+        description: costo del envío de cada order_item
+
+  - name: fact_reviews
+    description: Datamart de reviews
+    config:
+      schema: service_data_flachavanne2
+    columns:
+      - name: REVIEW_ID
+        description: identificador de la review
+        tests:
+          - not_null
+      - name: ORDER_ID
+        description: identificador de la orden sobre la que se hace la review
+        tests:
+          - not_null
+      - name: REVIEW_SCORE
+        description: puntaje asignado
+        tests:
+          - not_null
+      - name: REVIEW_COMMENT_TITLE
+        description: título del review
+      - name: REVIEW_COMMENT_MESSAGE
+        description: campo de téxto que contiene la review
+      - name: REVIEW_CREATION_DATE
+        description: momento de creación de la review
+      - name: REVIEW_ANSWER_TIMESTAMP
+        description: momento de respuesta a la review
+      - name: CUSTOMER_ID
+        description: id del cliente que hizo el pago
+      - name: ORDER_STATUS
+        description: estado de la orden
+      - name: ORDER_PURCHASE_TIMESTAMP
+        description: momento de compra (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_APPROVED_AT
+        description: momento de aprobación de la orden (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CARRIER_DATE
+        description: momento de entrega a flete (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_DELIVERED_CUSTOMER_DATE
+        description: momento de entrega a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ESTIMATED_DELIVERY_DATE
+        description: momento de entrega estimado a cliente (yyyy-mm-dd hh-mm-ss UTC)
+      - name: ORDER_ITEM_ID
+        description: identifica veces que aparece cada producto
+      - name: PRODUCT_ID
+        description: identificador del producto
+      - name: SELLER_ID
+        description: identificador del seller
+      - name: SHIPPING_LIMIT_DATE
+        description: fecha límite de envío
+      - name: PRICE
+        description: precio unitario de cada order_item
+      - name: FREIGHT_VALUE
+        description: costo del envío de cada order_item
